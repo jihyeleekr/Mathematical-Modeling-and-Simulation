@@ -1,19 +1,11 @@
-{\rtf1\ansi\ansicpg1252\cocoartf2759
-\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fmodern\fcharset0 Courier;\f1\fswiss\fcharset0 Helvetica;}
-{\colortbl;\red255\green255\blue255;}
-{\*\expandedcolortbl;;}
-\margl1440\margr1440\vieww11520\viewh8400\viewkind0
-\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
-
-\f0\fs24 \cf0 Mathematical Modeling and Simulation Problem Set 1\
+Mathematical Modeling and Simulation Problem Set 1
 Due: Jan. 30, 2024
-\f1 \
-\
-(a) 
-\f0 Explain why a \'93wave\'94 arises that travels to the right\
-	- Because of the line 
-\fs23 x = ~x&x([end 1:end-1]); This line shifts previous x to the right by one unit, for example, if x = [1,2,3,\'8539,40] after x = ~x&x([end 1:end-1]); x becomes x = [40,1,2,3\'85,38,39]. That is why a \'93wave\'94 arises that travels to the right.\
-\
-(b) Upon the collision of two waves, the position at which they meet is assigned a value of 2, denoting the influence of the left wave. This happens because, in the for loop, the movement of the right waves precedes that of the left waves. Consequently, just before the collision, the position is set to 1, only to be promptly replaced by 2 immediately following the collision.\
-\
-(d) My model randomly designates a specific position to remain standing and another position to stay seated, irrespective of the wave's impact on those positions. I believe the realism of my model is evident from observing the "Full Stadium Wave" video, where some individuals chose not to stand up, while others maintained their standing position even during the wave.}
+
+(a)  Explain why a "wave" arises that travels to the right
+	- Because of the line x = ~x&x([end 1:end-1]); This line shifts previous x to the right by one unit, for example, if x = [1,2,3,...39,40] after x = ~x&x([end 1:end-1]); x becomes x = [40,1,2,3... 38,39]. That is why a "wave" arises that travels to the right.
+
+(b) Upon the collision of two waves, the position at which they meet is assigned a value of 2, denoting the influence of the left wave. 
+This happens because, in the for loop, the movement of the right waves precedes that of the left waves. Consequently, just before the collision, the position is set to 1, only to be promptly replaced by 2 immediately following the collision.
+
+(d) My model randomly designates a specific position to remain standing and another position to stay seated, irrespective of the wave's impact on those positions. 
+I believe the realism of my model is evident from observing the "Full Stadium Wave" video, where some individuals chose not to stand up, while others maintained their standing position even during the wave.
