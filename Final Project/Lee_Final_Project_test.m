@@ -1,7 +1,7 @@
 function Lee_Final_Project
 
 % Agent Parameters
-N = 300 ; % initial number of agents (1.576 million people lives in Philadelphia in 2021)
+N = 500 ; % initial number of agents (1.576 million people lives in Philadelphia in 2021)
 i = 0.019; % initial positivity rate
 new = 0.01; % probability to add new infected agent every hour
 v = 0.013; % speed of agents (distance traveled per step)
