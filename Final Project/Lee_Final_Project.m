@@ -1,11 +1,5 @@
 function Lee_Final_Project
 
-% Initial percentages of population that uses each kind of mask (or lack thereof)
-p = [1,1,1, 1]; % no masks at all
-% p = [0.5, 0.75, 0.9, 1]; % no mask mandate
-% p = [0.01, 0.7, 0.9, 1]; % regular mask mandate
-
-
 % Agent Parameters
 N = 500 ; % initial number of agents (1.576 million people lives in Philadelphia in 2021)
 i = 0.019; % initial positivity rate
