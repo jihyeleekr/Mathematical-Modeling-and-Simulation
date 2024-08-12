@@ -3,7 +3,7 @@ function Lee_Final_Project
 %   Agents move in the box at a fixed speed along their respective directions, 
 %   slightly altering their direction at each step. For each timestep 
 %   (considered an hour), agents wander the grid. When an agent enters a 
-%   grid cell containing another agent, they face a probability of infection 
+%   grid cell containing another agent, it faces a probability of infection 
 %   if one of the agents is already infected. Once an agent has been 
 %   infected for six days, their status changes to 'Quarantine,' 
 %   and they remain stationary in the grid cell until their quarantine 
@@ -14,7 +14,7 @@ function Lee_Final_Project
 
 % Agent Parameters
 N = 500; % initial number of agents
-v = 0.0125 %; % speed of agents (slow: 0.0125, normal: 0.025, fast: 0.05)
+v = 0.0125;  % speed of agents (slow: 0.0125, normal: 0.025, fast: 0.05)
 
 % Time Parameters
 hours_in_day = 24; % consider each step an hour
@@ -29,13 +29,13 @@ cy = ax(3):ax(4); % cell boundary(y)
 
 % Initialization
 X = [ax(1)+(ax(2)-ax(1))*rand(N,1), ax(3)+(ax(4)-ax(3))*rand(N,1)]; % Initial positions of agents (spread throughout the entire domain)
-I = double(rand(N,1)<0.019); % infection status for each agent (0=negative, >0 is the amount of hours that they have been positive)
-I = I .* floor(rand(N,1) * (max_infection / hours_in_day)); % give each agent that is initally positive a random duration of infection (under the amount before they quarantine)
+I = double(rand(N,1)<0.019); % infection status for each agent (0=negative, >0 is the number of hours that they have been positive)
+I = I .* floor(rand(N,1) * (max_infection / hours_in_day)); % give each agent that is initially positive a random duration of infection (under the amount before they quarantine)
 D = rand(N,1)*2*pi; % initial angles of direction of agent
 H = zeros(0, 5); % array to hold the history of agents (time, infected, immune, quarantined, susceptible)
-M = zeros(N,1); % array to hold the immune status for each agent (0 = not immuned, 1 = immuned)
+M = zeros(N,1); % array to hold the immune status for each agent (0 = not immune, 1 = immune)
 
-% Cacluate the baseline probability for an agent sharing a sqaure with an
+% Calculate the baseline probability for an agent sharing a square with an
 % infected agent to become infected
 r0 = 3.0; % amount of agents a single infected agent will infect(in range 3.28 and 2.79)
 avg_pop_density = N / ((ax(2)-ax(1)) * (ax(4)-ax(3))); % average amount of people in cell to infect
@@ -55,7 +55,7 @@ for j = 1:ns % loop over steps
         end
     end
     
-    % Contain agents in domain: let agents "bounce" off walls
+    % Contain agents in the domain: let agents "bounce" off walls
     ind = (X(:,1)<ax(1)&cos(D)<0)|... % Agents hitting a boundary
         (X(:,1)>ax(2)&cos(D)>0); % horizontally
     D(ind) = pi-D(ind); % reverse x-direction
@@ -70,7 +70,7 @@ for j = 1:ns % loop over steps
 
     for k = 1:size(cells_with_multiple_agents,1) % for every cell with adequate number of agents
         agents_in_this_cell = zeros(0,0);
-        quarantine_present = 0; % Number of the agents in quaratine in the cell
+        quarantine_present = 0; % Number of the agents in quarantine in the cell
         covid_present = 0; % Number of the agents who are infected in the cell
 
         for l = 1:size(X,1) % Check if they are in the same cell add them to a list and check to see if they have COVID
@@ -80,20 +80,20 @@ for j = 1:ns % loop over steps
                 if I(l) >= 1 && I(l) <= max_infection && M(l) ~= 1
                     covid_present = 1; % Check if any agents have COVID (and have yet to quarantine)
                 
-                elseif I(l) > max_infection && M(l) ~= 1 % if the agent quaratine stauts and not immuned
-                    quarantine_present = 1; % Increase the number of quaratine agent
+                elseif I(l) > max_infection && M(l) ~= 1 % if the agent quarantine status and not immune
+                    quarantine_present = 1; % Increase the number of quarantine agent
                 end
             end
         end
 
         if covid_present % If COVID is present in this cell
             
-            for l = 1:size(agents_in_this_cell) % find the agents without COVID, and with a probability of the base COVID probability times the adjusted odds ratio 
+            for l = 1:size(agents_in_this_cell) % find the agents without COVID and with a probability of the base COVID probability times the adjusted odds ratio 
                 if I(agents_in_this_cell(l)) == 0 && rand < p_base
                     I(agents_in_this_cell(l)) = 1; % give them COVID (and start the countdown before their quarantine)
                 end
             end
-        elseif quarantine_present % If quarantine agent is presnet in this cell
+        elseif quarantine_present % If quarantine agent is present in this cell
             for l = 1:size(agents_in_this_cell) 
                 if I(agents_in_this_cell(l)) == 0 && rand < 0.001
                     I(agents_in_this_cell(l)) = 1; 
@@ -104,7 +104,7 @@ for j = 1:ns % loop over steps
 
     for k = 1:size(I) % check every agent
         if I(k) >= quarantine_over % if quarantine is over 
-            M(k) = 1; % set agent is immuned
+            M(k) = 1; % set agent is immune
             I(k) = 0; % set the agent recovered
         elseif I(k)>=1 % to see if they are infected
             I(k) = I(k) + 1; % if so, add a day to their time before quarantine
@@ -112,7 +112,7 @@ for j = 1:ns % loop over steps
     end
 
     current_infected = nnz(I > 0 & I < max_infection); % count the number of infected agents
-    current_immune = nnz(I == 0 & M == 1);  % count the number of imuuned agents
+    current_immune = nnz(I == 0 & M == 1);  % count the number of immune agents
     current_quarantined = nnz(I >= max_infection & M == 0);  % count the number of quarantined agents
     current_susceptible = nnz(I==0 & M==0);  % count the number of susceptible agents
     H(end+1, :) = [j, current_infected, current_immune, current_quarantined, current_susceptible]; % Add the number of infected, immuned, quaratined, and susceptible agents
@@ -143,7 +143,7 @@ for j = 1:ns % loop over steps
         % plot(X(ind,1),X(ind,2),'.','markersize',12,'color',[0.9 0 0.1], 'DisplayName', sprintf('Infected (%d)',nnz(ind)))
         % % quarantined
         % ind = I >= max_infection & M == 0; 
-        % plot(X(ind,1),X(ind,2),'o','markersize',6,'color',[0.8500 0.3250 0.0980], 'DisplayName', sprintf('Quaranined (%d)',nnz(ind)))
+        % plot(X(ind,1),X(ind,2),'o','markersize',6,'color',[0.8500 0.3250 0.0980], 'DisplayName', sprintf('Quarantined (%d)',nnz(ind)))
         % % Plot immune agents
         % ind = I == 0 & M==1;
         % plot(X(ind,1),X(ind,2),'.','markersize',12,'color',[0 0.5 0], 'DisplayName', sprintf('Immune (%d)',nnz(ind)))
@@ -168,7 +168,7 @@ for j = 1:ns % loop over steps
         % 
         % drawnow
 
-        if current_infected == 0 && current_quarantined == 0 % If there are no more infected and quarantined agnets, exit the loop
+        if current_infected == 0 && current_quarantined == 0 % If there are no more infected and quarantined agents, exit the loop
             break; % Exit the loop
         end
 
